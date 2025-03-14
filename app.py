@@ -22,7 +22,8 @@ async def download_qr(data: str = "Hello, World!"):
     img_io = io.BytesIO()
     qr.save(img_io, kind="png")
     img_io.seek(0)
-    return StreamingResponse(img_io, media_type="image/png", headers={"Content-Disposition": f"attachment; filename=qrcode.png"})
+    return StreamingResponse(img_io, media_type="image/png", 
+                             headers={"Content-Disposition": f"attachment; filename=qrcode.png"})
 
 if __name__ == "__main__":
    uvicorn.run(app)
