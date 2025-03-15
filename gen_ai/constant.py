@@ -1,0 +1,1 @@
+GEMMA3_1B = "gemma3:1b"
