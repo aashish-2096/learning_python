@@ -4,6 +4,14 @@ import qr_code.qr_code_generator as imp
 from fastapi.responses import StreamingResponse
 import segno
 import io
+from pydantic import BaseModel
+from gen_ai.agent_client import chatResponse
+from gen_ai.constant import GEMMA3_1B
+
+
+class ChatBody(BaseModel):
+    role: str
+    content: str
 
 app = FastAPI()
 
@@ -22,8 +30,15 @@ async def download_qr(data: str = "Hello, World!"):
     img_io = io.BytesIO()
     qr.save(img_io, kind="png")
     img_io.seek(0)
-    return StreamingResponse(img_io, media_type="image/png", headers={"Content-Disposition": f"attachment; filename=qrcode.png"})
+    return StreamingResponse(img_io, media_type="image/png", 
+                             headers={"Content-Disposition": f"attachment; filename=qrcode.png"})
 
+
+@app.post('/chat')
+def getChatResponse(req:ChatBody):
+    return chatResponse(req.__dict__, GEMMA3_1B)
+
+    return None
 if __name__ == "__main__":
    uvicorn.run(app)
    
