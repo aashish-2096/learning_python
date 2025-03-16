@@ -1,6 +1,7 @@
 from itertools import islice
 from more_itertools import peekable
 from functools import reduce
+from functools import partial
 
 ## Sun 16 March-2025
 
@@ -146,3 +147,178 @@ highest_mountains = list(filter(lambda m: m[1] > 8600, mountains))
 print(highest_mountains)
 
 
+
+## Dictiionaries 
+print("Dictionary get using getmethod, direct refreence throws exception")
+person = {
+    'first_name': 'John',
+    'last_name': 'Doe',
+    'age': 25,
+    'favorite_colors': ['blue', 'green'],
+    'active': True
+}
+
+ssn = person.get('ssn', '000-00-0000')
+print(ssn)
+
+
+print('Looping through dictionary')
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+print("Key Looping Default behaviour")
+for key in person:
+    print(f"{key}")
+    
+print("Value Looping")
+for value in person.values():
+    print(f"{value}")
+    
+    
+#Dictionary Comprehension 
+stocks = {
+    'AAPL': 121,
+    'AMZN': 3380,
+    'MSFT': 219,
+    'BIIB': 280,
+    'QDEL': 266,
+    'LVGO': 1344
+}
+
+selected_stocks = {s: p for (s, p) in stocks.items() if p > 400}
+print(selected_stocks)
+
+
+## Sets
+skills = {'Problem solving', 'Software design', 'Python programming'}
+if 'Java' in skills:
+    skills.remove('Java')
+print("Discard doesn't throw error if key is absent")
+skills.discard('Java')
+
+print("Making set immutable, frozenset for rescue")
+skills = {'Problem solving', 'Software design', 'Python programming'}
+skills = frozenset(skills)
+
+
+tags = {'Django', 'Pandas', 'Numpy'}
+new_tags = {tag.lower() for tag in tags if tag != 'Numpy'}
+print(new_tags)
+
+
+## Union method and union operator
+print("Only Considers sets")
+s1 = {'Python', 'Java'}
+s2 = {'C#', 'Java'}
+s = s1 | s2
+print(s)
+
+print("Considers iterables")
+rates = {1, 2, 3}
+ranks = [2, 3, 4]
+ratings = rates.union(ranks)
+print(ratings)
+
+
+print("Interection Considers iterables")
+numbers = {1, 2, 3}
+scores = [2, 3, 4]
+numbers = numbers.intersection(scores)
+print(numbers)
+
+print("Only Considers sets")
+numbers = {1, 2, 3}
+scores = {2, 3, 4}
+numbers = numbers & scores
+print(numbers)
+
+
+## Similar is the handling with difference method | difference Operator (-)
+## symmetric_difference(), operator (^)
+
+## Exceptions Handling - try...except...else..excuted when no exception then -> finally
+
+
+## for else statement 
+# Use Python for else statement to execute a code block if the loop doesn’t encounter a 
+# break statement or if the iterables object has no item
+
+print("for Else Statement")
+people = [{'name': 'John', 'age': 25},
+        {'name': 'Jane', 'age': 22},
+        {'name': 'Peter', 'age': 30},
+        {'name': 'Jenifer', 'age': 28}]
+
+#name = input('Enter a name:')
+name = ""
+for person in people:
+    if person['name'] == name:
+        print(person)
+        break
+else:
+    print(f'{name} not found!')
+    
+    
+## Similar is while else 
+print("While Else")
+basket = [
+    {'fruit': 'apple', 'qty': 20},
+    {'fruit': 'banana', 'qty': 30},
+    {'fruit': 'orange', 'qty': 10}
+]
+
+# fruit = input('Enter a fruit:')
+fruit = ""
+index = 0
+while index < len(basket):
+    item = basket[index]
+    # check the fruit name
+    if item['fruit'] == fruit:
+        print(f"The basket has {item['qty']} {item['fruit']}(s)")
+        found_it = True
+        break
+
+    index += 1
+else:
+    qty = int(input(f'Enter the qty for {fruit}:'))
+    basket.append({'fruit': fruit, 'qty': qty})
+    print(basket)
+
+## Tuples Unpacking 
+r, g, *other = (192, 210, 100, 0.5)
+
+#Tuple Aggregation
+odd_numbers = (1, 3, 5)
+even_numbers = (2, 4, 6)
+numbers = (*odd_numbers, *even_numbers)
+print(numbers)
+
+
+
+#Partial functions
+print("Partial Functions")
+def multiply(a, b):
+    return a*b
+x = 2
+f = partial(multiply, x)
+
+result = f(10)  # 20
+print(result)
+
+x = 3
+result = f(10)  # 20
+print(result)
+
+print("Type Hints")
+from typing import Union
+
+number = Union[int, float]
+
+def add(x: number, y: number) -> number:
+    return x + y
+print(add(10,11))
+
+
+
+## __name__ -> double underscores -> dunder variables 
+print(__name__)
